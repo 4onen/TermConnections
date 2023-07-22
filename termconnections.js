@@ -175,9 +175,10 @@ class TermConnectionsGame {
         const terms = this.categories[category];
         const category_el = quickEl(
             'div',
-            quickEl('h3', textNode(`${category_emoji} ${category}`)),
+            quickEl('h3', textNode(category)),
             ...terms.map((term) => quickEl('div', textNode(term))),
         )
+        category_el.setAttribute('data-indicator', category_emoji);
         category_el.classList.add('category');
         category_el.style.order = category_index - 1 - this.category_size;
         return category_el;

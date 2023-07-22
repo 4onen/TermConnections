@@ -126,6 +126,7 @@ button:disabled {
 
 #game-board>.category {
     grid-column: 1 / -1;
+    position: relative;
     display: grid;
     grid-template-columns: repeat(var(--grid-count), 1fr);
     order: -1;
@@ -134,6 +135,13 @@ button:disabled {
 .category>h3 {
     grid-column: 1 / -1;
     width: 100%;
+}
+
+.category::before {
+    content: attr(data-indicator);
+    position: absolute;
+    top: 0.7rem;
+    left: 1rem;
 }
 
 footer {
