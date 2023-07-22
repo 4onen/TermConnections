@@ -13,15 +13,14 @@
 }
 
 body {
-    background-color: var(--bg-color);
+    background-color: var(--bg-color-dark);
     color: var(--text-color);
     min-height: 100vh;
-
+    text-align: center;
     font-family: sans-serif;
 }
 
 #header-text {
-    text-align: center;
     font-size: 3rem;
     padding-block: 0.9rem;
     background-color: var(--bg-color);
@@ -30,7 +29,6 @@ body {
 }
 
 #header-date {
-    text-align: center;
     font-size: 2rem;
     padding-block: 0.1rem;
     background-color: var(--bg-color-dark);
@@ -42,7 +40,6 @@ body {
 }
 
 noscript {
-    text-align: center;
     font-size: 2rem;
     padding-block: 0.1rem;
     color: hsl(0, 100%, 40%);
@@ -53,9 +50,14 @@ noscript {
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
     gap: 2rem;
     margin-block: 2rem;
+}
+
+.game-control-info {
+    background-color: var(--bg-color-dark);
+    border: var(--border-width) solid var(--bg-color);
+    border-radius: 0.5rem;
 }
 
 button {
@@ -63,13 +65,13 @@ button {
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
     border: var(--border-width) solid var(--text-color);
-    background-color: var(--bg-color-dark);
+    background-color: var(--bg-color);
     color: var(--text-color);
     cursor: pointer;
 }
 
 button:hover {
-    background-color: var(--bg-color);
+    background-color: var(--bg-color-dark);
 }
 
 button:active {
@@ -96,7 +98,6 @@ button:disabled {
     width: calc(var(--grid-count) * 11rem - 1rem);
     gap: 1rem;
     margin: auto;
-    text-align: center;
     font-size: 1.5rem;
 }
 
@@ -104,11 +105,18 @@ button:disabled {
     background-color: var(--bg-color-dark);
     height: 10rem;
     border-radius: 2rem;
-    text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: var(--border-width) solid transparent;
+    border: var(--border-width) solid var(--bg-color);
+}
+
+#game-board>.term:hover {
+    background-color: var(--bg-color);
+}
+
+#game-board>.term:active {
+    background-color: var(--bg-selected-color);
 }
 
 .selected {
@@ -116,13 +124,14 @@ button:disabled {
     border-color: var(--text-color) !important;
 }
 
-#game-board>.completerow {
+#game-board>.category {
     grid-column: 1 / -1;
     display: grid;
     grid-template-columns: repeat(var(--grid-count), 1fr);
+    order: -1;
 }
 
-.completerow>h3 {
+.category>h3 {
     grid-column: 1 / -1;
     width: 100%;
 }
@@ -132,7 +141,6 @@ footer {
     bottom: 0;
     font-size: 0.8rem;
     width: 100%;
-    text-align: center;
     background-color: hsla(0, 0%, 100%, 0.3);
 }
 

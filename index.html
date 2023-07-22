@@ -6,7 +6,45 @@
     <meta viewport="width=device-width, initial-scale=1.0">
     <title>Loading...</title>
     <link rel="stylesheet" href="style.css">
-    <script src="termconnections.js" defer></script>
+    <script type='text/javascript'>
+        window.tc_game_args =
+        {
+            "options": {
+                "topic": "Game Characters",
+                "bgImage": "https://i.redd.it/6016i7vb7y111.jpg",
+                "pageColor": "hsl(209, 40%, 25%)",
+                "textColor": "hsl(32, 100%, 80%)"
+            },
+            "categories": {
+                "AwSW Dragons": [
+                    "Anna",
+                    "Remy",
+                    "Bryce",
+                    "Lorem"
+                ],
+                "Portal Characters": [
+                    "Chell",
+                    "Cave Johnson",
+                    "Wheatley",
+                    "GLaDOS"
+                ],
+                "Detroit: Become Human Characters": [
+                    "Connor; The android sent by Cyberlife",
+                    "Markus",
+                    "Kara",
+                    "Alice"
+                ],
+                "Mass Effect Characters": [
+                    "Shepard",
+                    "Wrex",
+                    "Tali'Zorah vas Normandy nar Rayya",
+                    "Garrus Vakarian"
+                ]
+            }
+        }
+    </script>
+    <script type='text/javascript' src="tinycolor.js"></script>
+    <script type='text/javascript' src="termconnections.js"></script>
 </head>
 
 <body>
@@ -16,33 +54,13 @@
         <h1>JavaScript is required to play this game.</h1>
     </noscript>
     <div id="game-content">
-        <div id="game-board">
-            <div class="completerow">
-                <h3>AwSW Dragons</h3>
-                <div>Anna</div>
-                <div>Remy</div>
-                <div>Lorem</div>
-                <div>Bryce</div>
-            </div>
-            <div class="completerow">
-                <h3>Portal Characters</h3>
-                <div>Chell</div>
-                <div>Cave Johnson</div>
-                <div>Wheatley</div>
-                <div>GLaDOS</div>
-            </div>
-            <div>Connor; The android sent by Cyberlife</div>
-            <div class="selected">Markus</div>
-            <div>Kara</div>
-            <div>Alice</div>
-            <div>Shepard</div>
-            <div>Wrex</div>
-            <div>Garrus Vakarian</div>
-            <div>Tali'Zorah vas Normandy nar Rayya</div>
-        </div>
+        <div id="game-board"></div>
         <div id="game-controls">
             <button id="game-shuffle">Shuffle</button>
-            <button id="game-submit" disabled>Submit</button>
+            <div class="game-control-info">
+                <button id="game-submit" disabled>Submit</button>
+                <p id="game-mistake-counter"></p>
+            </div>
         </div>
     </div>
     <footer class="footer">This BSD-3-clause open-source educational engine
