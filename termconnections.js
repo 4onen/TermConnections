@@ -73,6 +73,11 @@ class TermConnectionsGame {
         }
 
         this.game_board = document.getElementById('game-board');
+
+        this.game_board.style.setProperty('--grid-count', this.category_size);
+
+
+
         this.game_submit = document.getElementById('game-submit');
 
         {
