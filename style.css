@@ -1,0 +1,141 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-color: hsl(32, 100%, 90%);
+    --bg-color-dark: hsl(32, 100%, 85%);
+    --text-color: #264653;
+    --bg-selected-color: hsl(32, 100%, 70%);
+    --border-width: 0.15rem;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+
+    font-family: sans-serif;
+}
+
+#header-text {
+    text-align: center;
+    font-size: 3rem;
+    padding-block: 0.9rem;
+    background-color: var(--bg-color);
+    background: linear-gradient(to bottom, var(--bg-color) 0%, var(--bg-color-dark) 100%);
+    border-bottom: var(--border-width) solid var(--text-color);
+}
+
+#header-date {
+    text-align: center;
+    font-size: 2rem;
+    padding-block: 0.1rem;
+    background-color: var(--bg-color-dark);
+    border-bottom: var(--border-width) solid var(--text-color);
+}
+
+#header-date:empty {
+    display: none;
+}
+
+noscript {
+    text-align: center;
+    font-size: 2rem;
+    padding-block: 0.1rem;
+    color: hsl(0, 100%, 40%);
+    border-bottom: var(--border-width) solid var(--text-color);
+}
+
+#game-controls {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-block: 2rem;
+}
+
+button {
+    font-size: 1.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: var(--border-width) solid var(--text-color);
+    background-color: var(--bg-color-dark);
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--bg-color);
+}
+
+button:active {
+    background-color: var(--bg-selected-color);
+}
+
+button:disabled {
+    background-color: var(--bg-color);
+    color: hsl(0, 0%, 50%);
+    cursor: not-allowed;
+}
+
+#game-content {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    padding-block: 2rem;
+}
+
+#game-board {
+    display: grid;
+    --grid-count: 4;
+    grid-template-columns: repeat(var(--grid-count), 10rem);
+    width: calc(var(--grid-count) * 11rem - 1rem);
+    gap: 1rem;
+    margin: auto;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+#game-board>div {
+    background-color: var(--bg-color-dark);
+    height: 10rem;
+    border-radius: 2rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: var(--border-width) solid transparent;
+}
+
+.selected {
+    background-color: var(--bg-selected-color) !important;
+    border-color: var(--text-color) !important;
+}
+
+#game-board>.completerow {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(var(--grid-count), 1fr);
+}
+
+.completerow>h3 {
+    grid-column: 1 / -1;
+    width: 100%;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    font-size: 0.8rem;
+    width: 100%;
+    text-align: center;
+    background-color: hsla(0, 0%, 100%, 0.3);
+}
+
+footer>a {
+    color: var(--text-color);
+}
