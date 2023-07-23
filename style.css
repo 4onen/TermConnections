@@ -160,8 +160,19 @@ button:disabled {
     font-size: 1.5rem;
 }
 
+article {
+    width: 44rem;
+    margin: auto;
+}
+
+article>p {
+    margin: 1rem;
+    text-align: left;
+    text-indent: 3rem;
+}
+
 footer {
-    position: absolute;
+    position: sticky;
     bottom: 0;
     font-size: 0.8rem;
     width: 100%;
