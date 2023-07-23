@@ -65,20 +65,18 @@ class TermConnectionsGame {
 
         retheme(this.options);
 
+        this.game_board = document.getElementById('game-board');
+        this.game_submit = document.getElementById('game-submit');
+        this.game_mistake_counter = document.getElementById('game-mistake-counter');
+        this.game_report_attempts = document.getElementById('game-report-attempts');
+
         this.category_size = this.categories[Object.keys(this.categories)[0]].length;
         for (const category of Object.keys(this.categories)) {
             if (!(this.categories[category].length === this.category_size)) {
                 throw new Error(`All categories must have the same number of terms. ${category} has ${this.categories[category].length} terms, but the first category has ${this.category_size} terms.`);
             }
         }
-
-        this.game_board = document.getElementById('game-board');
-
         this.game_board.style.setProperty('--grid-count', this.category_size);
-
-
-
-        this.game_submit = document.getElementById('game-submit');
 
         {
             // TODO: Load game state from localStorage
@@ -122,12 +120,15 @@ class TermConnectionsGame {
                 const terms = this.get_selected_terms(selected_term_els);
                 // By the end, we should find one category that all the terms are in
                 // If we don't, then the user has made a mistake and we should reject
-                let term_categories = terms.map(this.get_term_categories.bind(this));
                 let category_set = this.get_term_categories(terms[0]);
                 for (const term of terms) {
                     const term_categories = this.get_term_categories(term);
                     category_set = category_set.filter((category) => term_categories.includes(category));
                     if (category_set.length <= 0) {
+                        // Since we know it's wrong, we can just replace the terms with any one of their categories
+                        const first_term_categories = terms.map((term) => this.get_term_categories(term)[0]);
+                        this.attempts.push(first_term_categories);
+                        this.game_mistake_counter.innerText = `Mistakes: ${this.get_mistake_count()}`;
                         // TODO: Play a rejection animation
                         return;
                     }
@@ -138,6 +139,8 @@ class TermConnectionsGame {
 
                 const first_category = category_set[0];
 
+                this.attempts.push(new Array(this.category_size).fill(first_category));
+
                 const term_elements = new Array(...document.getElementById('game-board').children);
                 const deselected_term_elements = term_elements.filter((el) => !el.classList.contains('selected'));
                 const new_category_el = this.categoryElFor(first_category);
@@ -145,7 +148,34 @@ class TermConnectionsGame {
                 this.game_board.replaceChildren(new_category_el, ...deselected_term_elements);
             }
         });
+
+        document.getElementById('game-report-button').addEventListener('click', () => {
+            this.game_mistake_counter.innerText = `Mistakes: ${this.get_mistake_count()}`;
+
+            const category_emoji_map = new Map(this.get_solved_categories().map((category) => {
+                return [category, this.get_category_emoji(category)];
+            }));
+            const report = this.attempts.map((attempt) => {
+                const solved = attempt.every((category) => category === attempt[0]);
+                const solved_emoji = solved ? "✅" : "❌";
+                return quickEl("p", textNode(solved_emoji), textNode('|'), textNode(attempt.map((category) => category_emoji_map.get(category) ?? "🔘").join(" ")));
+            });
+            this.game_report_attempts.replaceChildren(...report);
+        });
     }
+
+    get_solved_categories() {
+        return this.attempts.filter((attempt) => attempt.every((category) => category === attempt[0])).map((attempt) => attempt[0]);
+    }
+
+    get_solved_count() {
+        return this.get_solved_categories().length;
+    }
+
+    get_mistake_count() {
+        return this.attempts.length - this.get_solved_count();
+    }
+
 
     get_term_categories(term) {
         const term_categories = [];
@@ -173,10 +203,22 @@ class TermConnectionsGame {
         this.game_submit.disabled = !(this.get_selected_els().length === this.category_size);
     }
 
-    categoryElFor(category) {
+    get_category_index(category) {
         const category_index = Object.keys(this.categories).indexOf(category);
         console.assert(category_index >= 0, `Category ${category} not found in categories ${Object.keys(this.categories)}`);
-        const category_emoji = REGIONAL_INDICATORS[category_index];
+        return category_index;
+    }
+
+    get_category_emoji(category) {
+        if (typeof category === 'string' || category instanceof String) {
+            category = this.get_category_index(category);
+        }
+        return REGIONAL_INDICATORS[category];
+    }
+
+    categoryElFor(category) {
+        const category_index = this.get_category_index(category);
+        const category_emoji = this.get_category_emoji(category_index);
         const terms = this.categories[category];
         const category_el = quickEl(
             'div',

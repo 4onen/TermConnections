@@ -144,6 +144,22 @@ button:disabled {
     left: 1rem;
 }
 
+#game_report {
+    margin: auto;
+    padding: 1rem;
+    color: var(--text-color);
+    border: var(--border-width) solid var(--text-color);
+    background-color: var(--bg-color-dark);
+}
+
+#game-report-attempts {
+    border-top: var(--border-width) solid var(--text-color);
+    border-bottom: var(--border-width) solid var(--text-color);
+    margin: 1rem;
+    padding: 0.5rem;
+    font-size: 1.5rem;
+}
+
 footer {
     position: absolute;
     bottom: 0;

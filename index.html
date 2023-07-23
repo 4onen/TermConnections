@@ -63,9 +63,16 @@
             <button id="game-shuffle">Shuffle</button>
             <div class="game-control-info">
                 <button id="game-submit" disabled>Submit</button>
-                <p id="game-mistake-counter"></p>
+                <p id="game-mistake-counter">Mistakes: 0</p>
             </div>
+            <button id="game-report-button"
+                onclick="game_report.showModal()">Report</button>
         </div>
+        <dialog id="game_report">
+            <h2>Attempts</h2>
+            <div id="game-report-attempts"></div>
+            <button onclick="game_report.close()">Close</button>
+        </dialog>
     </div>
     <footer class="footer">This BSD-3-clause open-source educational engine
         produced by <a href="https://github.com/4onen">@4onen</a></footer>
