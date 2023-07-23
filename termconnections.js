@@ -81,23 +81,7 @@ class TermConnectionsGame {
         {
             // TODO: Load game state from localStorage
             const term_elements = Object.keys(this.categories).flatMap((category) => {
-                return this.categories[category].map((term) => {
-                    const el = quickEl('div', textNode(term));
-                    el.addEventListener('click', () => {
-                        if (el.classList.contains('selected')) {
-                            el.classList.remove('selected');
-                        } else {
-                            if (this.get_selected_els().length >= this.category_size) {
-                                // TODO: Play a rejection animation
-                            } else {
-                                el.classList.add('selected');
-                            }
-                        }
-                        this.updateSubmitButton();
-                    });
-                    el.classList.add('term');
-                    return el;
-                });
+                return this.categories[category].map(this.termElFor.bind(this));
             });
 
             this.game_board.replaceChildren(...shuffle(term_elements));
@@ -229,6 +213,34 @@ class TermConnectionsGame {
         category_el.classList.add('category');
         category_el.style.order = category_index - 1 - this.category_size;
         return category_el;
+    }
+
+    termEventHandler(evt) {
+        const el = evt.target;
+        if (el.classList.contains('selected')) {
+            el.classList.remove('selected');
+        } else {
+            if (this.get_selected_els().length >= this.category_size) {
+                // TODO: Play a rejection animation
+            } else {
+                el.classList.add('selected');
+            }
+        }
+        this.updateSubmitButton();
+    }
+
+    termElFor(term) {
+        const el = quickEl('div', textNode(term));
+        el.addEventListener('click', this.termEventHandler.bind(this));
+        el.addEventListener('keydown', (evt) => {
+            if (evt.key === 'Enter' || evt.key === ' ') {
+                evt.preventDefault();
+                this.termEventHandler(evt);
+            }
+        });
+        el.setAttribute('tabindex', 0)
+        el.classList.add('term');
+        return el;
     }
 }
 
