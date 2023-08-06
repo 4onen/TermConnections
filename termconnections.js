@@ -17,7 +17,7 @@ const retheme = (options) => {
     {
         let title = "Term Connections";
         if (options.topic) {
-            title += `: ${options.topic}`;
+            title = `${options.topic}`;
         }
         document.getElementById('header-text').innerText = title;
         document.title = title;
