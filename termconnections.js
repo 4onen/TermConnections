@@ -219,12 +219,10 @@ class TermConnectionsGame {
         const el = evt.target;
         if (el.classList.contains('selected')) {
             el.classList.remove('selected');
+        } else if (this.get_selected_els().length >= this.category_size) {
+            // TODO: Play a rejection animation
         } else {
-            if (this.get_selected_els().length >= this.category_size) {
-                // TODO: Play a rejection animation
-            } else {
-                el.classList.add('selected');
-            }
+            el.classList.add('selected');
         }
         this.updateSubmitButton();
     }
