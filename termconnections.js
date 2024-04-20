@@ -260,7 +260,7 @@ const get_args = async function () {
     const argsReadyPromise = get_args();
 
     await Promise.all([domReadyPromise, argsReadyPromise]).then(([_, args]) => {
-        new TermConnectionsGame(args);
+        return new TermConnectionsGame(args);
     });
 })();
 
